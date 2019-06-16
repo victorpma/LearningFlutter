@@ -1,5 +1,10 @@
 # LearningFlutter
 
+<b>Legenda Dificuldade:</b><br>
+💚: Fácil<br>
+💛: Médio<br>
+❤️: Difícil
+
 <table>
   <thead>
     <tr>
@@ -20,7 +25,7 @@
         Contador de Pessoas
       </td>
       <td class="text-center">
-        Fácil
+        💚
       </td>
       <td>
         Text, RaidedButton 
