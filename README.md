@@ -31,5 +31,25 @@
         Text, RaidedButton 
       </td>
     </tr>
+    <tr>
+      <td>
+        Calculadora de IMC
+      </td>
+      <td class="text-center">
+        💚
+      </td>
+      <td>        
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Conversor de moedas
+      </td>
+      <td class="text-center">
+        💚
+      </td>
+      <td>        
+      </td>
+    </tr>
   </tbody>
 </table>
