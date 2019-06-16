@@ -13,10 +13,7 @@
       </th>
       <th>
         Dificuldade
-      </th>
-      <th>
-        Componentes estudados
-      </th>
+      </th>      
     </tr>         
   </thead>
   <tbody>
@@ -26,10 +23,7 @@
       </td>
       <td class="text-center">
         💚
-      </td>
-      <td>
-        Text, RaidedButton 
-      </td>
+      </td>     
     </tr>
     <tr>
       <td>
@@ -37,9 +31,7 @@
       </td>
       <td class="text-center">
         💚
-      </td>
-      <td>        
-      </td>
+      </td>      
     </tr>
     <tr>
       <td>
@@ -47,9 +39,7 @@
       </td>
       <td class="text-center">
         💚
-      </td>
-      <td>        
-      </td>
+      </td>     
     </tr>
   </tbody>
 </table>
