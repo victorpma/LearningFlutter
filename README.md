@@ -1,7 +1,7 @@
 <h1 class="center">Aprendendo Flutter</h1>
 
-<h2>Aplicativos</h2><br>
-Aqui estão todos os aplicativos que foram desenvolvidos até então, abaixo segue uma lista de aplicativos já desenvolvidos para aprendizados com seus respectivo nível de aprendizado.<br>
+<h2>📱 Aplicativos</h2>
+Aqui estão todos os aplicativos que foram desenvolvidos até então, abaixo segue uma lista de aplicativos já desenvolvidos para aprendizados com seus respectivo nível de aprendizado.
 
 <b>Legenda Dificuldade:</b><br>
 💚: Fácil<br>
@@ -42,7 +42,7 @@ Aqui estão todos os aplicativos que foram desenvolvidos até então, abaixo seg
       <td>
         Calculadora de IMC
       </td>
-      <td>
+      <td>				
       </td>
       <td>
       </td>
