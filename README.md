@@ -15,6 +15,12 @@ Aqui estão todos os aplicativos que foram desenvolvidos até então, abaixo seg
         Aplicativo
       </th>
       <th>
+        Descrição
+      </th>
+      <th>
+        Principal ponto de estudo
+      </th>
+      <th>
         Dificuldade
       </th>      
     </tr>         
@@ -24,6 +30,10 @@ Aqui estão todos os aplicativos que foram desenvolvidos até então, abaixo seg
       <td>
         Contador de Pessoas
       </td>
+      <td>
+      </td>
+      <td>
+      </td>
       <td class="text-center">
         💚
       </td>     
@@ -32,6 +42,10 @@ Aqui estão todos os aplicativos que foram desenvolvidos até então, abaixo seg
       <td>
         Calculadora de IMC
       </td>
+      <td>
+      </td>
+      <td>
+      </td>
       <td class="text-center">
         💚
       </td>      
@@ -39,6 +53,10 @@ Aqui estão todos os aplicativos que foram desenvolvidos até então, abaixo seg
     <tr>
       <td>
         Conversor de moedas
+      </td>
+      <td>
+      </td>
+      <td>
       </td>
       <td class="text-center">
         💚
