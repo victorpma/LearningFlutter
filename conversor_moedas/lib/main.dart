@@ -4,6 +4,22 @@ import 'dart:convert';
 
 const request = "https://api.hgbrasil.com/finance?format=json&key=5091ebd6";
 
+TextEditingController _controllerReais = TextEditingController();
+TextEditingController _controllerDolares = TextEditingController();
+TextEditingController _controllerEuros = TextEditingController();
+
+void _reaisChanged(String text) {
+  print(text);
+}
+
+void _dolaresChanged(String text) {
+  print(text);
+}
+
+void _eurosChanged(String text) {
+  print(text);
+}
+
 void main() {
   runApp(MaterialApp(
     title: "Conversor de Moedas",
@@ -54,40 +70,33 @@ class _HomePageState extends State<HomePage> {
                     children: <Widget>[
                       Icon(Icons.monetization_on,
                           color: Colors.amber, size: 150.0),
-                      TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            labelText: "Reais",
-                            labelStyle: TextStyle(color: Colors.amber),
-                            border: OutlineInputBorder(),
-                            prefix: Text("R\$")),
-                        style: TextStyle(color: Colors.amber, fontSize: 25.0),
-                      ),
+                      _textFieldMoney(
+                          "Reais", "R\$", _controllerReais, _reaisChanged),
                       Divider(),
-                      TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            labelText: "Dólares",
-                            labelStyle: TextStyle(color: Colors.amber),
-                            border: OutlineInputBorder(),
-                            prefix: Text("US\$")),
-                        style: TextStyle(color: Colors.amber, fontSize: 25.0),
-                      ),
+                      _textFieldMoney("Dólares", "US\$", _controllerDolares,
+                          _dolaresChanged),
                       Divider(),
-                      TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            labelText: "Euros",
-                            labelStyle: TextStyle(color: Colors.amber),
-                            border: OutlineInputBorder(),
-                            prefix: Text("€")),
-                        style: TextStyle(color: Colors.amber, fontSize: 25.0),
-                      )
+                      _textFieldMoney(
+                          "Euros", "€", _controllerEuros, _eurosChanged)
                     ],
                   ),
                 );
             }
           },
         ));
+  }
+
+  Widget _textFieldMoney(String text, String prefix,
+      TextEditingController controller, Function changed) {
+    return TextField(
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+            labelText: text,
+            labelStyle: TextStyle(color: Colors.amber),
+            border: OutlineInputBorder(),
+            prefix: Text("$prefix")),
+        style: TextStyle(color: Colors.amber, fontSize: 25.0),
+        controller: controller,
+        onChanged: changed);
   }
 }
