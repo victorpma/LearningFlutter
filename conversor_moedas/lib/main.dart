@@ -4,22 +4,6 @@ import 'dart:convert';
 
 const request = "https://api.hgbrasil.com/finance?format=json&key=5091ebd6";
 
-TextEditingController _controllerReais = TextEditingController();
-TextEditingController _controllerDolares = TextEditingController();
-TextEditingController _controllerEuros = TextEditingController();
-
-void _reaisChanged(String text) {
-  print(text);
-}
-
-void _dolaresChanged(String text) {
-  print(text);
-}
-
-void _eurosChanged(String text) {
-  print(text);
-}
-
 void main() {
   runApp(MaterialApp(
     title: "Conversor de Moedas",
@@ -35,6 +19,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController _controllerReais = TextEditingController();
+  TextEditingController _controllerDolares = TextEditingController();
+  TextEditingController _controllerEuros = TextEditingController();
+
+  double dolar;
+  double euro;
+
   Future<Map> _obterCotacao() async {
     http.Response response = await http.get(request);
 
@@ -43,14 +34,54 @@ class _HomePageState extends State<HomePage> {
     throw new Exception();
   }
 
+  void _resetarCampos() {
+    _controllerReais.text = "";
+    _controllerDolares.text = "";
+    _controllerEuros.text = "";
+  }
+
+  void _reaisChanged(String text) {
+    if (text.isEmpty) _resetarCampos();
+
+    double real = double.parse(text);
+
+    _controllerDolares.text = (real / dolar).toStringAsPrecision(2);
+    _controllerEuros.text = (real / euro).toStringAsPrecision(2);
+  }
+
+  void _dolaresChanged(String text) {
+    if (text.isEmpty) _resetarCampos();
+
+    double dolar = double.parse(text);
+
+    _controllerReais.text = (dolar * this.dolar).toStringAsPrecision(2);
+    _controllerEuros.text =
+        (dolar * this.dolar / this.euro).toStringAsPrecision(2);
+  }
+
+  void _eurosChanged(String text) {
+    if (text.isEmpty) _resetarCampos();
+
+    double euro = double.parse(text);
+
+    _controllerDolares.text =
+        (euro * this.euro / this.dolar).toStringAsPrecision(2);
+    _controllerReais.text =
+        (euro * this.euro / this.dolar).toStringAsPrecision(2);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-            title: Text("Conversor de Moedas"),
-            backgroundColor: Colors.amber,
-            centerTitle: true),
+          title: Text("Conversor de Moedas"),
+          backgroundColor: Colors.amber,
+          centerTitle: true,
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.refresh), onPressed: _resetarCampos)
+          ],
+        ),
         body: FutureBuilder<Map>(
           future: _obterCotacao(),
           builder: (context, snapshot) {
@@ -63,6 +94,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               default:
+                this.dolar =
+                    snapshot.data["results"]["currencies"]["USD"]["buy"];
+                this.euro =
+                    snapshot.data["results"]["currencies"]["EUR"]["buy"];
+
                 return SingleChildScrollView(
                   padding: EdgeInsets.all(10.0),
                   child: Column(
@@ -89,7 +125,7 @@ class _HomePageState extends State<HomePage> {
   Widget _textFieldMoney(String text, String prefix,
       TextEditingController controller, Function changed) {
     return TextField(
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
         decoration: InputDecoration(
             labelText: text,
             labelStyle: TextStyle(color: Colors.amber),
