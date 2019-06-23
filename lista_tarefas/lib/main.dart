@@ -18,8 +18,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List tarefas = [];
+  Map<String, dynamic> _ultimaTarefaRemovida = new Map();
+  int _posicaoUltimaTarefaRemovida;
 
   TextEditingController _textTarefaController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _lerDados().then((dados) {
+        tarefas = json.decode(dados);
+      });
+    });
+  }
 
   void _adicionarTarefa() {
     setState(() {
@@ -28,6 +40,7 @@ class _HomePageState extends State<HomePage> {
       novaTarefa["ok"] = false;
       _textTarefaController.text = "";
       tarefas.add(novaTarefa);
+      _salvarDados();
     });
   }
 
@@ -85,28 +98,62 @@ class _HomePageState extends State<HomePage> {
               )),
           Expanded(
             child: ListView.builder(
-              padding: EdgeInsets.only(top: 10.0),
-              itemCount: tarefas.length,
-              itemBuilder: (context, index) {
-                return CheckboxListTile(
-                  title: Text(tarefas[index]["title"]),
-                  value: tarefas[index]["ok"],
-                  secondary: CircleAvatar(
-                    child: Icon(tarefas[index]["ok"] == true
-                        ? Icons.check
-                        : Icons.error),
-                  ),
-                  onChanged: (checked) {
-                    setState(() {
-                      tarefas[index]["ok"] = checked;
-                    });
-                  },
-                );
-              },
-            ),
+                padding: EdgeInsets.only(top: 10.0),
+                itemCount: tarefas.length,
+                itemBuilder: buildItemTarefa),
           )
         ],
       ),
     );
+  }
+
+  Widget buildItemTarefa(context, index) {
+    return Dismissible(
+        key: Key(DateTime.now().microsecondsSinceEpoch.toString()),
+        direction: DismissDirection.startToEnd,
+        background: Container(
+          color: Colors.red,
+          child: Align(
+            alignment: Alignment(-0.9, 0.0),
+            child: Icon(Icons.delete, color: Colors.white),
+          ),
+        ),
+        child: CheckboxListTile(
+            title: Text(tarefas[index]["title"]),
+            value: tarefas[index]["ok"],
+            secondary: CircleAvatar(
+              child: Icon(
+                  tarefas[index]["ok"] == true ? Icons.check : Icons.error),
+            ),
+            onChanged: (checked) {
+              setState(() {
+                tarefas[index]["ok"] = checked;
+              });
+            }),
+        onDismissed: (direction) {
+          setState(() {
+            _ultimaTarefaRemovida = Map.from(tarefas[index]);
+            _posicaoUltimaTarefaRemovida = index;
+            tarefas.removeAt(index);
+
+            _salvarDados();
+
+            final snackBar = SnackBar(
+                duration: Duration(seconds: 2),
+                content:
+                    Text("Tarefa \"${_ultimaTarefaRemovida["title"]}\" removida"),
+                action: SnackBarAction(
+                    label: "Desfazer",
+                    onPressed: () {
+                      setState(() {
+                        tarefas.insert(_posicaoUltimaTarefaRemovida,
+                            _ultimaTarefaRemovida);
+                        _salvarDados();
+                      });
+                    }));
+
+            Scaffold.of(context).showSnackBar(snackBar);
+          });
+        });
   }
 }
