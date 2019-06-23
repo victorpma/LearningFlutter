@@ -68,6 +68,21 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<Null> _recarrefarTarefas() async {
+    await Future.delayed(Duration(seconds: 1));
+
+    setState(() {
+      tarefas.sort((a, b) {
+        if (a["ok"] && !b["ok"])
+          return 1;
+        else if (!a["ok"] && b["ok"])
+          return -1;
+        else
+          return 0;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,10 +112,13 @@ class _HomePageState extends State<HomePage> {
                 ],
               )),
           Expanded(
-            child: ListView.builder(
-                padding: EdgeInsets.only(top: 10.0),
-                itemCount: tarefas.length,
-                itemBuilder: buildItemTarefa),
+            child: RefreshIndicator(
+              onRefresh: _recarrefarTarefas,
+              child: ListView.builder(
+                  padding: EdgeInsets.only(top: 10.0),
+                  itemCount: tarefas.length,
+                  itemBuilder: buildItemTarefa),
+            ),
           )
         ],
       ),
@@ -140,8 +158,8 @@ class _HomePageState extends State<HomePage> {
 
             final snackBar = SnackBar(
                 duration: Duration(seconds: 2),
-                content:
-                    Text("Tarefa \"${_ultimaTarefaRemovida["title"]}\" removida"),
+                content: Text(
+                    "Tarefa \"${_ultimaTarefaRemovida["title"]}\" removida"),
                 action: SnackBarAction(
                     label: "Desfazer",
                     onPressed: () {
