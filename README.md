@@ -27,50 +27,50 @@
   </thead>
   <tbody>
     <tr>
-      <td>
+      <td align="center">
         Contador de Pessoas
       </td>
       <td>
       </td>
       <td>
       </td>
-      <td class="text-center">
+      <td align="center">
         💚
       </td>     
     </tr>
     <tr>
-      <td>
+      <td align="center">
         Calculadora de IMC
       </td>
       <td>				
       </td>
       <td>
       </td>
-      <td class="text-center">
+      <td align="center">
         💚
       </td>      
     </tr>
     <tr>
-      <td>
+      <td align="center">
         Conversor de moedas
       </td>
       <td>
       </td>
       <td>
       </td>
-      <td class="text-center">
+      <td align="center">
         💚
       </td>         
     </tr>
     <tr>
-       <td>
+       <td align="center">
         Listador de Tarefas
       </td>
       <td>
       </td>
       <td>
       </td>
-      <td class="text-center">
+      <td align="center">
         💛
       </td>
     </tr>
