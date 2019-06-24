@@ -60,7 +60,19 @@
       </td>
       <td class="text-center">
         💚
-      </td>     
+      </td>         
+    </tr>
+    <tr>
+       <td>
+        Listador de Tarefas
+      </td>
+      <td>
+      </td>
+      <td>
+      </td>
+      <td class="text-center">
+        💛
+      </td>
     </tr>
   </tbody>
 </table>
