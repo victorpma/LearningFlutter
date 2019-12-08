@@ -18,21 +18,18 @@ class ContatoHelper {
   Database _db;
 
   Future<Database> get db async {
-    if (_db != null) {
-      return _db;
-    } else {
-      _db = await inicializarDb();
-      return _db;
-    }
+    if (_db == null) _db = await inicializarDb();
+
+    return _db;
   }
 
   Future<Database> inicializarDb() async {
     final databasePath = await getDatabasesPath();
-    final path = join(databasePath, "contatos.db");
+    final path = join(databasePath, "contatos2.db");
 
     return await openDatabase(path, version: 1,
-        onCreate: (Database db, int newVersion) async {
-      db.execute("CREATE IF NOT EXISTS TABLE $_contatoTabela("
+        onCreate: (Database db, int newerVersion) async {
+      await db.execute("CREATE TABLE $_contatoTabela("
           "$_idColuna INTEGER PRIMARY KEY,"
           "$_nomeColuna TEXT,"
           "$_emailColuna TEXT,"
@@ -66,34 +63,31 @@ class ContatoHelper {
     var dbContato = await db;
 
     return await dbContato.delete(_contatoTabela,
-        where: "$_idColuna = ?", 
-        whereArgs: [idContato]);
+        where: "$_idColuna = ?", whereArgs: [idContato]);
   }
-  
-  Future<int> atualizarContato(Contato contato) async{
+
+  Future<int> atualizarContato(Contato contato) async {
     var dbContato = await db;
 
-     return await dbContato.update(_contatoTabela, 
-        contato.toMap(),
-        where:"$_idColuna = ?",
-        whereArgs: [contato.id]);
+    return await dbContato.update(_contatoTabela, contato.toMap(),
+        where: "$_idColuna = ?", whereArgs: [contato.id]);
   }
 
-  Future<List<Contato>> obterContatos() async{
+  Future<List<Contato>> obterContatos() async {
     var dbContato = await db;
 
     List contatoMap = await dbContato.rawQuery("SELECT * FROM $_contatoTabela");
 
     List<Contato> contatos = new List<Contato>();
 
-    for(Map map in contatoMap){
+    for (Map map in contatoMap) {
       contatos.add(Contato.fromMap(map));
     }
 
     return contatos;
   }
 
-  Future dispose() async{
+  Future dispose() async {
     var dbContato = await db;
 
     dbContato.close();
