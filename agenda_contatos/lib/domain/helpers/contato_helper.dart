@@ -61,4 +61,41 @@ class ContatoHelper {
     else
       return null;
   }
+
+  Future<int> excluirContato(int idContato) async {
+    var dbContato = await db;
+
+    return await dbContato.delete(_contatoTabela,
+        where: "$_idColuna = ?", 
+        whereArgs: [idContato]);
+  }
+  
+  Future<int> atualizarContato(Contato contato) async{
+    var dbContato = await db;
+
+     return await dbContato.update(_contatoTabela, 
+        contato.toMap(),
+        where:"$_idColuna = ?",
+        whereArgs: [contato.id]);
+  }
+
+  Future<List<Contato>> obterContatos() async{
+    var dbContato = await db;
+
+    List contatoMap = await dbContato.rawQuery("SELECT * FROM $_contatoTabela");
+
+    List<Contato> contatos = new List<Contato>();
+
+    for(Map map in contatoMap){
+      contatos.add(Contato.fromMap(map));
+    }
+
+    return contatos;
+  }
+
+  Future dispose() async{
+    var dbContato = await db;
+
+    dbContato.close();
+  }
 }
