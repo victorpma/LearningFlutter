@@ -75,7 +75,7 @@
       </td>
     </tr>
     <tr>
-      <td align="center>
+      <td align="center">
         Agenda de Contatos
       </td>
       <td/>
