@@ -50,21 +50,38 @@ class _HomePageState extends State<HomePage> {
 
   Widget _contatoCard(context, index) {
     return GestureDetector(
-      child: Card(        
-        child: Row(        
-          children: <Widget>[
-            Container(
-              width: 80.0,
-              height: 80.0,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image:
-                      DecorationImage(image: AssetImage("images/avatar.png"))),
-            ),
-            Column(
-              children: <Widget>[Text("Titulo")],
-            )
-          ],
+      child: Card(
+        child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: 80.0,
+                height: 80.0,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: contatos[index].avatar != null
+                            ? FileImage(File(contatos[index].avatar))
+                            : AssetImage("images/avatar.png"))),
+              ),
+              Padding(padding: EdgeInsets.only(left: 10.0)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(contatos[index].nome ?? "-",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20.0)),
+                  Text(
+                    contatos[index].email ?? "-",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 15.0),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
