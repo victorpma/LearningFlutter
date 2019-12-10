@@ -4,6 +4,8 @@ import 'package:agenda_contatos/domain/helpers/contato_helper.dart';
 import 'package:agenda_contatos/domain/models/contato.dart';
 import 'package:flutter/material.dart';
 
+import 'contato_page.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -43,7 +45,9 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          _showContatoPage();
+        },
       ),
     );
   }
@@ -84,6 +88,14 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      onTap: () {
+        _showContatoPage(contato: contatos[index]);
+      },
     );
+  }
+
+  void _showContatoPage({Contato contato}) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ContatoPage(contato: contato)));
   }
 }
