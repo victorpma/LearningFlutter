@@ -1,10 +1,8 @@
 import 'dart:io';
-
+import 'package:flutter/material.dart';
+import 'contato_page.dart';
 import 'package:agenda_contatos/domain/helpers/contato_helper.dart';
 import 'package:agenda_contatos/domain/models/contato.dart';
-import 'package:flutter/material.dart';
-
-import 'contato_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,11 +18,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    contatoHelper.obterContatos().then((listContatos) {
-      setState(() {
-        contatos = listContatos;
-      });
-    });
+    _obterTodosContatos();
   }
 
   @override
@@ -94,8 +88,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _showContatoPage({Contato contato}) {
-    Navigator.push(context,
+  void _showContatoPage({Contato contato}) async {
+    var recContato = await Navigator.push(context,
         MaterialPageRoute(builder: (context) => ContatoPage(contato: contato)));
+
+    if (recContato != null) {
+      if (contato != null)
+        await contatoHelper.atualizarContato(recContato);
+      else
+        await contatoHelper.inserirContato(recContato);
+    }
+
+    _obterTodosContatos();
+  }
+
+  void _obterTodosContatos() {
+    contatoHelper.obterContatos().then((listContatos) {
+      setState(() {
+        contatos = listContatos;
+      });
+    });
   }
 }
