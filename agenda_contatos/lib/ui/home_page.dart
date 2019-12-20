@@ -83,9 +83,91 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       onTap: () {
-        _showContatoPage(contato: contatos[index]);
+        _showOpcoesContato(context, index);
       },
     );
+  }
+
+  void _showOpcoesContato(BuildContext context, index) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return BottomSheet(
+            onClosing: () {},
+            builder: (context) {
+              return Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: FlatButton(
+                          child: Text(
+                            "Ligar",
+                            style: TextStyle(color: Colors.red, fontSize: 20.0),
+                          ),
+                          onPressed: () {},
+                        )),
+                    Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: FlatButton(
+                          child: Text(
+                            "Editar",
+                            style: TextStyle(color: Colors.red, fontSize: 20.0),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            _showContatoPage(contato: contatos[index]);
+                          },
+                        )),
+                    Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: FlatButton(
+                          child: Text(
+                            "Excluir",
+                            style: TextStyle(color: Colors.red, fontSize: 20.0),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(
+                                        "Deseja realmente excluir contato?"),
+                                    content: Text(
+                                        "Se confirmar, a exclusão não poderá ser desfeita."),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text("Sim",
+                                            style:
+                                                TextStyle(color: Colors.red)),
+                                        onPressed: () {
+                                          contatoHelper.excluirContato(
+                                              contatos[index].id);
+                                          _obterTodosContatos();
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      FlatButton(
+                                        child: Text("Não",
+                                            style:
+                                                TextStyle(color: Colors.red)),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  );
+                                });
+                          },
+                        )),
+                  ],
+                ),
+              );
+            },
+          );
+        });
   }
 
   void _showContatoPage({Contato contato}) async {

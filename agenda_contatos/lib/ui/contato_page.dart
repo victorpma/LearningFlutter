@@ -38,7 +38,7 @@ class _ContatoPageState extends State<ContatoPage> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: _exibirPopAlteracao(),
+        onWillPop: _exibirPopAlteracao,
         child: Scaffold(
           appBar: AppBar(
             title: Text(_edicaoContato.nome ?? "Novo Contato"),
@@ -99,7 +99,7 @@ class _ContatoPageState extends State<ContatoPage> {
         ));
   }
 
-  _exibirPopAlteracao() {
+  Future<bool> _exibirPopAlteracao() {
     if (_editou) {
       showDialog(
           context: context,
@@ -110,13 +110,24 @@ class _ContatoPageState extends State<ContatoPage> {
               actions: <Widget>[
                 FlatButton(
                   child: Text("Sim"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                ),
+                FlatButton(
+                  child: Text("Não"),
                   onPressed: (){
-                    
+                    Navigator.pop(context);
                   },
                 )
               ],
             );
           });
+
+      return Future.value(false);
+    } else {
+      return Future.value(true);
     }
   }
 }
