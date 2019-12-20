@@ -79,7 +79,7 @@
         Agenda de Contatos
       </td>
       <td/>
-      <td/>      
+      <td>Navigator, Sqflite, BottomSheet, AlertDialog ...</td>      
       <td align="center">
         💛
       </td>
