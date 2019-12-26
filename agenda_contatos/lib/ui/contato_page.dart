@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:agenda_contatos/domain/models/contato.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ContatoPage extends StatefulWidget {
   final Contato contato;
@@ -62,6 +62,16 @@ class _ContatoPageState extends State<ContatoPage> {
                               : AssetImage("images/avatar.png")),
                     ),
                   ),
+                  onTap: () {
+                    ImagePicker.pickImage(source: ImageSource.camera)
+                        .then((image) {
+                      if (image == null) return;
+
+                      setState(() {
+                        _edicaoContato.avatar = image.path;
+                      });
+                    });
+                  },
                 ),
                 TextField(
                   controller: _nomeController,
@@ -117,7 +127,7 @@ class _ContatoPageState extends State<ContatoPage> {
                 ),
                 FlatButton(
                   child: Text("Não"),
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.pop(context);
                   },
                 )

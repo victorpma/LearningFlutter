@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'contato_page.dart';
 import 'package:agenda_contatos/domain/helpers/contato_helper.dart';
 import 'package:agenda_contatos/domain/models/contato.dart';
@@ -106,7 +107,10 @@ class _HomePageState extends State<HomePage> {
                             "Ligar",
                             style: TextStyle(color: Colors.red, fontSize: 20.0),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            launch("tel: 79991109402");
+                            Navigator.pop(context);
+                          },
                         )),
                     Padding(
                         padding: EdgeInsets.all(10.0),
