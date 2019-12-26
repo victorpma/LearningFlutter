@@ -5,6 +5,8 @@ import 'contato_page.dart';
 import 'package:agenda_contatos/domain/helpers/contato_helper.dart';
 import 'package:agenda_contatos/domain/models/contato.dart';
 
+enum OrderOptions { orderAZ, orderZA }
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -26,9 +28,25 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Contatos"),
-          centerTitle: true,
-          backgroundColor: Colors.red),
+        title: Text("Contatos"),
+        centerTitle: true,
+        backgroundColor: Colors.red,
+        actions: <Widget>[
+          PopupMenuButton<OrderOptions>(
+            itemBuilder: (context) => <PopupMenuEntry<OrderOptions>>[
+              const PopupMenuItem<OrderOptions>(
+                child: Text("Ordenar de A-Z"),
+                value: OrderOptions.orderAZ,
+              ),
+              const PopupMenuItem<OrderOptions>(
+                child: Text("Ordenar de Z-A"),
+                value: OrderOptions.orderZA,
+              )
+            ],
+            onSelected: _ordernarContatos,
+          )
+        ],
+      ),
       backgroundColor: Colors.white,
       body: ListView.builder(
         padding: EdgeInsets.all(10.0),
@@ -193,6 +211,25 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         contatos = listContatos;
       });
+    });
+  }
+
+  void _ordernarContatos(OrderOptions ordem) {
+    switch (ordem) {
+      case OrderOptions.orderAZ:
+          contatos.sort((a,b){
+            return a.nome.toLowerCase().compareTo(b.nome.toLowerCase());
+          });
+          break;        
+      case OrderOptions.orderZA:
+      contatos.sort((a,b){
+            return b.nome.toLowerCase().compareTo(a.nome.toLowerCase());
+          });
+        break;
+    }
+
+    setState(() {
+      
     });
   }
 }
