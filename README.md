@@ -48,5 +48,11 @@
       <td>Navigator, Sqflite, BottomSheet, AlertDialog ...</td>      
       <td align="center">💛</td>
     </tr>
+    <tr>
+      <td align="center">Loja Virtual</td>
+      <td/>
+      <td>PageView, Drawer, ListView, GridView, Firebase, ...</td>
+      <td align="center">❤️</td>
+    </tr>
   </tbody>
 </table>
