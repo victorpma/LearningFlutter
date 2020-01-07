@@ -20,8 +20,7 @@ class ProductTab extends StatelessWidget {
           else {
             return ListView(
                 children: snapshot.data.documents.map((document) {
-              return CategoryTile(
-                  document.data["title"], document.data["icon"]);
+              return CategoryTile(document);
             }).toList());
           }
         });

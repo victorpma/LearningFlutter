@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/pages/products_page.dart';
 
 class CategoryTile extends StatelessWidget {
-  final String title;
-  final String icon;
+  final DocumentSnapshot documentSnapshot;
 
-  CategoryTile(this.title, this.icon);
+  CategoryTile(this.documentSnapshot);
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +14,14 @@ class CategoryTile extends StatelessWidget {
       leading: CircleAvatar(
         radius: 25.0,
         backgroundColor: Colors.transparent,
-        backgroundImage: NetworkImage(icon),
+        backgroundImage: NetworkImage(documentSnapshot.data["icon"]),
       ),
-      title: Text(this.title),
+      title: Text(documentSnapshot.data["title"]),
       trailing: Icon(Icons.keyboard_arrow_right),
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ProductsPage(documentSnapshot)));
+      },
     ));
   }
 }
